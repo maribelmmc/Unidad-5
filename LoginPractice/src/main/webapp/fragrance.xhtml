@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<h1>Fragrance</h1>
+	
+	<h:form id="frmFragrance">
+	Brand:<h:inputText
+	value="#{fragranceController.fragrance.brand}" />
+	Capacity:<h:inputText
+	value="#{fragranceController.fragrance.capacity}" />
+	Color:<h:inputText
+	value="#{fragranceController.fragrance.color}" />
+	Type:<h:inputText 
+	value="#{fragranceController.fragrance.type}" />
+	<h:commandButton action="#{fragranceController.save}" 
+	value="Save">
+	<f:ajax execute="frmFragrance" render="dtFragrance"/>
+	</h:commandButton>
+	<h:commandButton rendered="#{fragranceController.editMode}"
+	action="#{fragranceController.save}" value="Cancel">
+	<f:ajax render="frmFragrance"></f:ajax>
+	</h:commandButton>
+	<h:dataTable value="#{fragranceController.fragrances}" var="c" id="dtFragrance">
+	<h:column>
+	<f:facet name="header">Id</f:facet>
+		#{c.id}
+	</h:column>
+		<h:column>
+		<f:facet name="header">Brand</f:facet>
+		#{c.brand}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Capacity</f:facet>
+		#{c.capacity}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Color</f:facet>
+		#{c.color}
+	</h:column>
+		<h:column>
+		<f:facet name="header">Type</f:facet>
+		#{c.type}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Actions</f:facet>
+	<h:commandButton 
+	action="#{fragranceController.delete(c)}"
+	 value="Delete" 
+	 onclick="return window.confirm 
+		 ('Are you sure?')">
+	 <f:ajax render="frmFragrance:dtFragrance"/>
+	 </h:commandButton>
+	 <h:commandButton 
+	 action="#{fragranceController.update(c)}" 
+	 value="Update">
+	 <f:ajax render="frmFragrance"/>
+	 </h:commandButton>
+	 
+	</h:column>
+	</h:dataTable>
+	</h:form>
+</body>
+</html>

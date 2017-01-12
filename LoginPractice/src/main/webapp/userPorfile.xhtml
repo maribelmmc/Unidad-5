@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<h1>UserPorfile</h1>
+	
+	<h:form id="frmUserPorfile">
+	UserId:<h:inputText
+	value="#{userPorfileController.userPorfile.userId}" />
+	PropertyDefinitionId:<h:inputText
+	value="#{userPorfileController.userPorfile.propertyDefinitionId}" />
+	PropertyValue:<h:inputText
+	value="#{userPorfileController.userPorfile.propertyValue}" />
+	PropertyText:<h:inputText 
+	value="#{userPorfileController.userPorfile.propertyText}" />
+	Visivility:<h:inputText
+	value="#{userPorfileController.userPorfile.visivility}" />
+	LastUpdateDate:<h:inputText 
+	value="#{userPorfileController.userPorfile.lastUpdateDate}" />
+	<h:commandButton action="#{userPorfileController.save}" 
+	value="Save">
+	<f:ajax execute="frmUserPorfile" render="dtUserPorfile"/>
+	</h:commandButton>
+	<h:commandButton rendered="#{userPorfileController.editMode}"
+	action="#{userPorfileController.save}" value="Cancel">
+	<f:ajax render="frmUserPorfile"></f:ajax>
+	</h:commandButton>
+	<h:dataTable value="#{userPorfileController.userPorfiles}" var="c" id="dtUserPorfile">
+	<h:column>
+	<f:facet name="header">PorfileId</f:facet>
+		#{c.porfileId}
+	</h:column>
+	<h:column>
+		<f:facet name="header">UserId</f:facet>
+		#{c.userId}
+	</h:column>
+		<h:column>
+		<f:facet name="header">PropertyDefinitionId</f:facet>
+		#{c.propertyDefinitionId}
+	</h:column>
+	<h:column>
+	<f:facet name="header">PropertyValue</f:facet>
+		#{c.propertyValue}
+	</h:column>
+	<h:column>
+	<f:facet name="header">PropertyText</f:facet>
+		#{c.propertyText}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Visivility</f:facet>
+		#{c.visivility}
+	</h:column>
+	<h:column>
+	<f:facet name="header">LastUpdateDate</f:facet>
+		#{c.lastUpdateDate}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Actions</f:facet>
+	<h:commandButton 
+	action="#{userPorfileController.delete(c)}"
+	 value="Delete" 
+	 onclick="return window.confirm 
+		 ('Are you sure?')">
+	 <f:ajax render="frmUserPorfile:dtUserPorfile"/>
+	 </h:commandButton>
+	 <h:commandButton 
+	 action="#{userPorfileController.update(c)}" 
+	 value="Update">
+	 <f:ajax render="frmUserPorfile"/>
+	 </h:commandButton>
+	 
+	</h:column>
+	</h:dataTable>
+	</h:form>
+</body>
+</html>

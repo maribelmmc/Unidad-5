@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<h1>TermDefinition</h1>
+<h:form id="frmTermDefinition">
+	DbxrefId:<h:inputText
+	value="#{termDefinitionController.termDefinition.dbxrefId}" />
+	TermComment:<h:inputText
+	value="#{termDefinitionController.termDefinition.termComment}" />
+	Reference:<h:inputText 
+	value="#{termDefinitionController.termDefinition.reference}" />
+	<h:commandButton action="#{termDefinitionController.save}" 
+	value="Save">
+	<f:ajax execute="frmTermDefinition" render="dtTermDefinition"/>
+	</h:commandButton>
+	<h:commandButton rendered="#{termDefinitionController.editMode}"
+	action="#{termDefinitionController.save}" value="Cancel">
+	<f:ajax render="frmTermDefinition"></f:ajax>
+	</h:commandButton>
+	<h:dataTable value="#{termDefinitionController.termDefinitions}" var="c" id="dtTermDefinition">
+	<h:column>
+	
+
+	<f:facet name="header">TermId</f:facet>
+		#{c.termId}
+	</h:column>
+		<h:column>
+		<f:facet name="header">DbxrefId</f:facet>
+		#{c.dbxrefId}
+	</h:column>
+	<h:column>
+	<f:facet name="header">TermComment</f:facet>
+		#{c.termComment}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Reference</f:facet>
+		#{c.reference}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Actions</f:facet>
+	<h:commandButton 
+	action="#{termDefinitionController.delete(c)}"
+	 value="Delete" 
+	 onclick="return window.confirm 
+		 ('Are you sure?')">
+	 <f:ajax render="frmTermDefinition:dtTermDefinition"/>
+	 </h:commandButton>
+	 <h:commandButton 
+	 action="#{termDefinitionController.update(c)}" 
+	 value="Update">
+	 <f:ajax render="frmTermDefinition"/>
+	 </h:commandButton>
+	 
+	</h:column>
+	</h:dataTable>
+	</h:form>
+</body>
+</html>

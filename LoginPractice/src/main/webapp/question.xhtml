@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<h1>Question</h1>
+	
+	<h:form id="frmQuestion">
+	ExamId:<h:inputText
+	value="#{questionController.question.examId}" />
+	Text:<h:inputText
+	value="#{questionController.question.text}" />
+	Explanation:<h:inputText 
+	value="#{questionController.question.explanation}" />
+	Mark:<h:inputText 
+	value="#{questionController.question.mark}" />
+	IsMultiSelect:<h:inputText 
+	value="#{questionController.question.isMultiSelect}" />
+	Url:<h:inputText
+	value="#{questionController.question.url}" />
+	StartSeconds:<h:inputText 
+	value="#{questionController.question.startSeconds}" />
+	<h:commandButton action="#{questionController.save}" 
+	value="Save">
+	<f:ajax execute="frmQuestion" render="dtQuestion"/>
+	</h:commandButton>
+	<h:commandButton rendered="#{questionController.editMode}"
+	action="#{questionController.save}" value="Cancel">
+	<f:ajax render="frmQuestion"></f:ajax>
+	</h:commandButton>
+	<h:dataTable value="#{questionController.questions}" var="c" id="dtQuestion">
+	<h:column>
+	<f:facet name="header">Id</f:facet>
+		#{c.id}
+	</h:column>
+		<h:column>
+		<f:facet name="header">ExamId</f:facet>
+		#{c.examId}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Text</f:facet>
+		#{c.text}
+	</h:column>
+	
+		<h:column>
+		<f:facet name="header">Explanation</f:facet>
+		#{c.explanation}
+	</h:column>
+	<h:column>
+		<f:facet name="header">Mark</f:facet>
+		#{c.mark}
+	</h:column>
+	<h:column>
+		<f:facet name="header">IsMultiSelect</f:facet>
+		#{c.isMultiSelect}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Url</f:facet>
+		#{c.url}
+	</h:column>
+	<h:column>
+		<f:facet name="header">StartSeconds</f:facet>
+		#{c.startSeconds}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Actions</f:facet>
+	<h:commandButton 
+	action="#{questionController.delete(c)}"
+	 value="Delete" 
+	 onclick="return window.confirm 
+		 ('Are you sure?')">
+	 <f:ajax render="frmQuestion:dtQuestion"/>
+	 </h:commandButton>
+	 <h:commandButton 
+	 action="#{questionController.update(c)}" 
+	 value="Update">
+	 <f:ajax render="frmQuestion"/>
+	 </h:commandButton>
+	 
+	</h:column>
+	</h:dataTable>
+	</h:form>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<h1>Game</h1>
+	
+	<h:form id="frmGame">
+	Description:<h:inputText
+	value="#{gameController.game.description}" />
+	Flavor:<h:inputText
+	value="#{gameController.game.flavor}" />
+	Type:<h:inputText 
+	value="#{gameController.game.type}" />
+	<h:commandButton action="#{gameController.save}" 
+	value="Save">
+	<f:ajax execute="frmGame" render="dtGame"/>
+	</h:commandButton>
+	<h:commandButton rendered="#{gameController.editMode}"
+	action="#{gameController.save}" value="Cancel">
+	<f:ajax render="frmGame"></f:ajax>
+	</h:commandButton>
+	<h:dataTable value="#{GameController.games}" var="c" id="dtGame">
+	<h:column>
+	<f:facet name="header">Id</f:facet>
+		#{c.id}
+	</h:column>
+		<h:column>
+		<f:facet name="header">Description</f:facet>
+		#{c.description}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Flavor</f:facet>
+		#{c.flavor}
+	</h:column>
+		<h:column>
+		<f:facet name="header">Type</f:facet>
+		#{c.type}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Actions</f:facet>
+	<h:commandButton 
+	action="#{gameController.delete(c)}"
+	 value="Delete" 
+	 onclick="return window.confirm 
+		 ('Are you sure?')">
+	 <f:ajax render="frmGame:dtGame"/>
+	 </h:commandButton>
+	 <h:commandButton 
+	 action="#{gameController.update(c)}" 
+	 value="Update">
+	 <f:ajax render="frmGame"/>
+	 </h:commandButton>
+	 
+	</h:column>
+	</h:dataTable>
+	</h:form>
+</body>
+</html>

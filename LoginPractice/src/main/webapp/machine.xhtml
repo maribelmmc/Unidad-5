@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<body>
+
+	<h1>Machine</h1>
+	
+	<h:form id="frmMachine">
+	Description:<h:inputText
+	value="#{machineController.machine.description}" />
+	Company:<h:inputText
+	value="#{machineController.machine.company}" />
+	Color:<h:inputText 
+	value="#{machineController.machine.color}" />
+	<h:commandButton action="#{machineController.save}" 
+	value="Save">
+	<f:ajax execute="frmMachine" render="dtMachine"/>
+	</h:commandButton>
+	<h:commandButton rendered="#{machineController.editMode}"
+	action="#{machineController.save}" value="Cancel">
+	<f:ajax render="frmmachine"></f:ajax>
+	</h:commandButton>
+	<h:dataTable value="#{machineController.machines}" var="c" id="dtMachine">
+	<h:column>
+	<f:facet name="header">Id</f:facet>
+		#{c.id}
+	</h:column>
+		<h:column>
+		<f:facet name="header">Description</f:facet>
+		#{c.description}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Company</f:facet>
+		#{c.company}
+	</h:column>
+		<h:column>
+		<f:facet name="header">Color</f:facet>
+		#{c.color}
+	</h:column>
+	<h:column>
+	<f:facet name="header">Actions</f:facet>
+	<h:commandButton 
+	action="#{machineController.delete(c)}"
+	 value="Delete" 
+	 onclick="return window.confirm 
+		 ('Are you sure?')">
+	 <f:ajax render="frmMachine:dtMachine"/>
+	 </h:commandButton>
+	 <h:commandButton 
+	 action="#{machineController.update(c)}" 
+	 value="Update">
+	 <f:ajax render="frmMachine"/>
+	 </h:commandButton>
+	 
+	</h:column>
+	</h:dataTable>
+	</h:form>
+</body>
+</html>
